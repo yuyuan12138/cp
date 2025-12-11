@@ -18,26 +18,24 @@ int main() {
 
   int n, m;
   cin >> n >> m;
-  multiset<int> vis;
-  vector<int> h(n), t(m);
-
-  for (int i = 0; i < n; i++) {
-    cin >> h[i];
-    vis.insert(h[i]);
+  multiset<int> st;
+  vector<int> t(m);
+  for (int i = 0, x; i < n; i++) {
+    cin >> x;
+    st.insert(x);
   }
-  for (int i = 0; i < m; i++) {
-    cin >> t[i];
-  }
-  
-  int cur = 0;
-  for (int i = 0; i < m; i++) {
-    if (vis.lower_bound(t[i]) == vis.end()) {
-      cout << -1 < '\n';
+  for (int i = 0, x; i < m; i++) {
+    cin >> x;
+    auto ptr = st.upper_bound(x);
+    if (ptr == st.begin()) {
+      cout << -1 << '\n';
     } else {
-
+      ptr = prev(ptr);
+      cout << *ptr << '\n';
+      st.erase(ptr);
     }
   }
-
+  
   return 0;
 }
 
