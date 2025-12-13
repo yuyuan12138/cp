@@ -1,6 +1,6 @@
 struct DSU {
   int n;
-  std::vector<int> f, siz;
+  vector<int> f, siz;
   int cnt;
 
   DSU() {}
@@ -11,7 +11,7 @@ struct DSU {
   void init(int n) {
     cnt = n;
     f.resize(n);
-    std::iota(f.begin(), f.end(), 0);
+    iota(f.begin(), f.end(), 0);
     siz.assign(n, 1);
   }
 
@@ -34,7 +34,7 @@ struct DSU {
       return false;
     }
     if (siz[x] < siz[y]) {
-      std::swap(x, y);
+      swap(x, y);
     }
     f[y] = x;
     siz[x] += siz[y];
