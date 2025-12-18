@@ -6,6 +6,17 @@
 
 using namespace std;
 
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+#include <functional>
+template <typename T, typename C = std::less<>>
+using ordered_set =
+    __gnu_pbds::tree<T, __gnu_pbds::null_type, C, __gnu_pbds::rb_tree_tag,
+                     __gnu_pbds::tree_order_statistics_node_update>;
+
+// less_equal<int>
+// order_of_key(num), find_by_order(key)
+
 #ifdef LOCAL
 #include "algo/debug.h"
 #else
@@ -35,25 +46,22 @@ int main() {
     return a[0] < b[0];
   });
   
-  debug(a);
-  set<int> st;
+  ordered_set<int, less_equal<int>> st;
 
   vector<vector<int>> ans(2, vector<int> (n));
-
+  // order_of_key(num)
   for (int i = 0; i < n; i++) {
-    int l = a[i][0], r = a[i][1], idx = a[i][2];
-    if (st.lower_bound(r) != st.end()) {
-      ans[0][idx] = 1;
-    }
+    int r = a[i][1], idx = a[i][2];
+    int rank = st.order_of_key(r);
+    ans[0][idx] = (int) st.size() - rank;
     st.insert(r);
   }
 
   st.clear();
   for (int i = n - 1; i >= 0; i--) {
-    int l = a[i][0], r = a[i][1], idx = a[i][2];
-    if (st.upper_bound(r) != st.begin()) {
-      ans[1][idx] = 1;
-    }
+    int r = a[i][1], idx = a[i][2];
+    int rank = st.order_of_key(r + 1);
+    ans[1][idx] = rank;
     st.insert(r);
   } 
   swap(ans[0], ans[1]);

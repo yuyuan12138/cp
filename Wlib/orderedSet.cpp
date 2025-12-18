@@ -7,3 +7,5 @@ using ordered_set =
                      __gnu_pbds::tree_order_statistics_node_update>;
 
 // order_of_key(num), find_by_order(key)
+
+//  ordered_set<int, less_equal<int>> st;
