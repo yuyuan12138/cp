@@ -1,6 +1,6 @@
 /**
  *    author:  yuyuan
- *    created: 2025-12-22 00:00:24
+ *    created: 2025-12-22 10:00:11
  **/
 #include <bits/stdc++.h>
 
@@ -167,56 +167,27 @@ U& operator>>(U& stream, Modular<T>& number) {
 constexpr int md = 1e9 + 7;
 using Mint = Modular<std::integral_constant<decay<decltype(md)>::type, md>>;
 
+constexpr int N = 1e6;
+
+Mint dp[N + 1][2];
+
 int main() {
   ios::sync_with_stdio(false);
   cin.tie(nullptr);
 
-  int n, m;
-  cin >> n >> m;
-  vector<int> x(n);
-  for (int i = 0; i < n; i++) {
-    cin >> x[i];
+  dp[1][0] = 1;
+  dp[1][1] = 1;
+  for (int h = 2; h <= N; h++) {
+    dp[h][0] = 2 * dp[h - 1][0] + dp[h - 1][1];
+    dp[h][1] = 4 * dp[h - 1][1] + dp[h - 1][0];
   }
-  
-  vector<vector<Mint>> f(n, vector<Mint> (m + 1));
-  if (x[0] == 0) {
-    for (int v = 1; v <= m; v++) {
-      f[0][v] = 1;
-    }
-  } else {
-    f[0][x[0]] = 1;
+  int t;
+  cin >> t;
+  while (t--) {
+    int n;
+    cin >> n;
+    cout << dp[n][0] + dp[n][1] << '\n';
   }
-
-  for (int i = 1; i < n; i++) {
-    if (x[i] == 0) {
-      for (int v = 1; v <= m; v++) {
-        f[i][v] += f[i - 1][v];
-        if (v > 1) {
-          f[i][v] += f[i - 1][v - 1];
-        }
-        if (v < m) {
-          f[i][v] += f[i - 1][v + 1];
-        }
-      }
-    } else {
-      f[i][x[i]] += f[i - 1][x[i]];
-      if (x[i] > 1) {
-        f[i][x[i]] += f[i - 1][x[i] - 1];
-      }
-      if (x[i] < m) {
-        f[i][x[i]] += f[i - 1][x[i] + 1];
-      }
-    }
-  }
-  Mint ans = 0;
-  if (x[n - 1] == 0) {
-    for (int v = 1; v <= m; v++) {
-      ans += f[n - 1][v];
-    }
-  } else {
-    ans = f[n - 1][x[n - 1]];
-  }
-  cout << ans;
 
   return 0;
 }
