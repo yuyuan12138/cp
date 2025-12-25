@@ -47,8 +47,27 @@ int main() {
             f[i][j] = max(f[i][j], f[i][j - 1]);
         }
     }
-    cout << f[n - 1][m - 1];
-    
+    cout << f[n - 1][m - 1] << '\n';
+    vector<int> ans;
+    int i = n - 1, j = m - 1;
+    while (i >= 0 && j >= 0) {
+        if (a[i] == b[j]) {
+            ans.push_back(a[i]);
+            i--, j--;
+        } else if (j == 0) { 
+            i--;
+        } else if (i == 0) {
+            j--;
+        } else if (f[i - 1][j] > f[i][j - 1]) {
+            i--;
+        } else {
+            j--;
+        }
+    }
+    reverse(ans.begin(), ans.end());
+    for (int x : ans) {
+        cout << x << ' ';
+    }
     return 0;
 }
 
