@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 struct DSU {
     int n;
     std::vector<int> f, siz;
@@ -46,3 +48,30 @@ struct DSU {
 
     int count() { return cnt; }
 };
+
+int main() {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+
+    int n, m;
+    std::cin >> n >> m;
+    DSU dsu(n);
+    for (int i = 0; i < m; i++) {
+        int x, y;
+        std::cin >> x >> y;
+        x--, y--;
+        dsu.merge(x, y);
+    }
+    std::vector<std::pair<int, int>> ans;
+    for (int u = 0; u < n; u++) {
+        if (dsu.merge(u, 0)) {
+            ans.emplace_back(1, u + 1);
+        }
+    }
+    std::cout << ans.size() << '\n';
+    for (auto [u, v]: ans) {
+        std::cout << u << ' ' << v << '\n';
+    }
+
+    return 0;
+}
