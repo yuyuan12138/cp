@@ -22,7 +22,7 @@ struct DSU {
         return x;
     }
 
-    bool same(int x, int y) {
+    bool is_same(int x, int y) {
         return find(x) == find(y);
     }
 

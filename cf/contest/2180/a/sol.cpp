@@ -1,21 +1,22 @@
-/**
- *    author:  yuyuan
- *    created: 2025-12-20 16:45:06
- **/
 #include <bits/stdc++.h>
 
-using namespace std;
-
-#ifdef LOCAL
-#include "algo/debug.h"
-#else
-#define debug(...) 42
-#endif
+void solve() {
+    int l, a, b;
+    std::cin >> l >> a >> b;
+    int g = std::gcd(l, b);
+    std::cout << (l - a - 1) / g * g + a << '\n';
+}
 
 int main() {
-  ios::sync_with_stdio(false);
-  cin.tie(nullptr);
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
 
-  return 0;
+    int t;
+    std::cin >> t;
+    while (t--) {
+        solve();
+    }
+
+    return 0;
 }
 
