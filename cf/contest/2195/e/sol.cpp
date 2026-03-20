@@ -1,3 +1,7 @@
+#include <bits/stdc++.h>
+
+using i64 = long long;
+
 template<class T>
 constexpr T power(T a, i64 b) {
     T res = 1;
@@ -214,3 +218,57 @@ constexpr MInt<P> CInv = MInt<P>(V).inv();
 
 constexpr int P = 1000000007;
 using Z = MInt<P>;
+
+void solve() {
+	int n;
+	std::cin >> n;
+	std::vector<std::vector<int>> adj(n);
+	for (int i = 0; i < n; i++) {
+		int u, v;
+		std::cin >> u >> v;
+		if (u != 0) {
+			adj[i].push_back(u - 1);
+			adj[i].push_back(v - 1);
+		}
+	}
+	std::vector<Z> times(n);
+	[&](this auto &&self, int u) -> void {
+		if (adj[u].size() == 0) {
+			return ;
+		} else {
+			for (int v : adj[u]) {
+				self(v);
+				times[u] += times[v];
+			}
+			times[u] += 4;
+		}
+	}(0);
+	std::vector<Z> ans(n);	
+
+	[&](this auto &&self, int u, Z cur) -> void {
+		ans[u] = cur + times[u] + 1;
+		if (adj[u].size() > 0) {
+			for (int v : adj[u]) {
+				self(v, cur + times[u] + 1);
+			}
+		} 
+	}(0, Z(0));
+	for (int u = 0; u < n; u++) {
+		std::cout << ans[u] << " \n"[u == n - 1];
+	}
+}
+
+int main() {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+
+	int t;
+	std::cin >> t;
+	
+	while (t--) {
+		solve();
+	}
+
+    return 0;
+}
+
