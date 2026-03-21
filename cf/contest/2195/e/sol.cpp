@@ -1,5 +1,11 @@
 #include <bits/stdc++.h>
 
+#ifdef LOCAL
+#include "algo/debug.h"
+#else
+#define debug(...) 42
+#endif
+
 using i64 = long long;
 
 template<class T>
