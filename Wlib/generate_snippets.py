@@ -29,7 +29,7 @@ for subdir in os.walk('.'):
 
     print(f'generated snippet {name}', file=sys.stderr)
 
-with open('cpp.json', 'w') as f:
+with open('cpp.code-snippets', 'w') as f:
   f.write(json.dumps(snippets, indent=2))
 
 print('done', file=sys.stderr)
