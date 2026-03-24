@@ -17,11 +17,11 @@ int main() {
   cin.tie(nullptr);
   int n;
   cin >> n;
-  int cnt = 0;
+  int ans = 0;
   while (n) {
-    cnt += (n >= 5);
+    ans += n / 5;
     n /= 5;
   }
-  cout << 5 * int64_t(cnt) * (cnt - 1) / 2;
+  cout << ans;
   return 0;
 }
