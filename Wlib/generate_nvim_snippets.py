@@ -1,5 +1,6 @@
-from pathlib import Path
 import shutil
+from pathlib import Path
+
 
 def main():
     exclude_dirs = {
@@ -9,7 +10,7 @@ def main():
         "build",
         "__pycache__",
     }
-    exclude_files = [".gitignore", 'generate_nvim_snippets.py']
+    exclude_files = [".gitignore", "generate_nvim_snippets.py"]
     src_root = Path.cwd()
     dst_root = Path.home() / ".config" / "nvim" / "templates"
     for src in src_root.rglob("*"):
@@ -17,7 +18,7 @@ def main():
             continue
         if not src.is_file():
             continue
-        if src.name in exclude_files: 
+        if src.name in exclude_files:
             continue
         rel = src.relative_to(src_root)
         dst = dst_root / rel
@@ -25,6 +26,7 @@ def main():
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, dst)
     print("Done")
+
 
 if __name__ == "__main__":
     main()
