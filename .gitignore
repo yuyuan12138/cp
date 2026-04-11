@@ -1,0 +1,12 @@
+**/sol.exe
+**/sol
+
+**/*in*
+**/*out*
+
+tmp/**
+
+**/.cph/
+.cph/
+
+**/*bin
