@@ -22,7 +22,14 @@ def delete_matching_items(root_dir: str, pattern: str, dry_run: bool = True):
 
     # Find all items (files + directories) that match the pattern
     # Note: rglob(pattern) matches the pattern against the name, not full path
-    matched_items = list(root.rglob(pattern))
+    matched_items = []
+    exclude_dirs = ['.git']
+    # 手动遍历，跳过排除目录
+    for item in root.rglob(pattern):
+        # 检查路径的任何一部分是否在排除列表中
+        if any(excluded in item.parts for excluded in exclude_dirs):
+            continue
+        matched_items.append(item)
 
     if not matched_items:
         print(f"ℹ️ No items matching '{pattern}' found under '{root}'.")
