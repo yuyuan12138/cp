@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-
-using i64 = long long;
 static int topbit32(unsigned x) {
     return 31 - __builtin_clz(x);
 }
@@ -80,42 +77,3 @@ template <class T, class Cmp = std::less<T>> struct RMQ {
         }
     }
 };
-
-void solve() {
-    int n, h;
-    std::cin >> n >> h;
-    std::vector<int> a(n);
-    for (int i = 0; i < n; i++) {
-        std::cin >> a[i];
-    }
-    RMQ<int, std::greater<int>> rmq(a);
-    std::vector<i64> b(n);
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            int max = rmq(std::min(i, j), std::max(j, i) + 1);
-            b[i] += h - max;
-        }
-    }
-    i64 ans = 0;
-    for (int i = 0; i < n; i++) {
-        int arg = i;
-        for (int j = i; j < n; j++) {
-            if (a[j] > a[arg]) {
-                arg = j;
-            }
-            ans = std::max(ans, b[i] + b[j] - b[arg]);
-        }
-    }
-    std::cout << ans << '\n';
-}
-
-int main() {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
-    int t;
-    std::cin >> t;
-    while (t--) {
-        solve();
-    }
-    return 0;
-}
