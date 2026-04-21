@@ -22,4 +22,6 @@ void sieve(int n) {
     }
 }
 
-bool isprime(int n) { return minp[n] == n; }
+bool isprime(int n) {
+    return minp[n] == n;
+}

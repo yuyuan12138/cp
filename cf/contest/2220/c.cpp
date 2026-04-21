@@ -5,19 +5,17 @@ using i64 = long long;
 void solve() {
     int p, q;
     std::cin >> p >> q;
-    i64 delta = i64(p + 1) * (p + 1) + 4ll * q;
-    i64 sqrt = std::sqrt(delta);
-    bool ok = false;
-    if (sqrt * sqrt == delta) {
-        ok = true;
+    int sum = p + 2 * q;
+    for (int n = 1; n * n <= sum; n++) {
+        if ((sum - n) % (2 * n + 1) == 0) {
+            int m = (sum - n) / (2 * n + 1);
+            if (std::abs(m - n) <= p) {
+                std::cout << m << ' ' << n << '\n';
+                return;
+            }
+        }
     }
-    if (!ok) {
-        std::cout << -1 << '\n';
-    } else {
-        int n = (-p - 1 + sqrt) / 2;
-        int m = p + n;
-        std::cout << m << ' ' << n << '\n';
-    }
+    std::cout << -1 << '\n';
 }
 
 int main() {
