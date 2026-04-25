@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+constexpr int MOD = 998244353;
+
+int main() {
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+  int tt;
+  cin >> tt;
+  while (tt--) {
+    int64_t n, x;
+    cin >> n >> x;
+    int64_t ans = 0;
+    ans += (x / 4 + ((x % 4) >= 1)) * ((n - x + 1) / 4 + (n % 4 >= 1)) % MOD;
+    ans += (x / 4 + ((x % 4) >= 3) + 1) * ((n - x + 1) / 4 + (n % 4 >= 3)) % MOD;
+    cout << ans << '\n';
+  }
+  return 0;
+}
+

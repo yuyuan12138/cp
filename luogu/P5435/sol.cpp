@@ -1,3 +1,7 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
 vector<int> minp, primes;
 
 void sieve(int n) {
@@ -24,4 +28,18 @@ void sieve(int n) {
 
 bool isprime(int n) {
   return minp[n] == n;
+}
+
+constexpr int MOD = 998244353;
+
+int main() {
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+  sieve(1e6);
+
+  [&]() -> void {
+      
+  }();
+
+  return 0;
 }
