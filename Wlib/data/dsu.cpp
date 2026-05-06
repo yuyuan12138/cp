@@ -1,14 +1,16 @@
 class DSU {
   public:
-    std::vector<int> pa;
+    vector<int> pa;
     int n;
 
     DSU(int _n) : n(_n) {
         pa.resize(n);
-        std::iota(pa.begin(), pa.end(), 0);
+        iota(pa.begin(), pa.end(), 0);
     }
 
-    int get(int x) { return (x == pa[x] ? x : (pa[x] = get(pa[x]))); }
+    int get(int x) {
+        return (x == pa[x] ? x : (pa[x] = get(pa[x])));
+    }
 
     bool unite(int x, int y) {
         x = get(x);
@@ -20,5 +22,7 @@ class DSU {
         return false;
     }
 
-    bool isSame(int x, int y) { return get(x) == get(y); }
+    bool isSame(int x, int y) {
+        return get(x) == get(y);
+    }
 };
