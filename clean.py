@@ -65,7 +65,7 @@ def delete_matching_items(root_dir: str, pattern: str, dry_run: bool = True):
 # ==================== EXAMPLES ====================
 if __name__ == "__main__":
     target = "./"
-    files = ['.DS_Store', '*.in', '*.out', '*tests', '*.bin', 'sol', 'in', 'main', 'output*']
+    files = ['.vscode', '.DS_Store', '*.in', '*.out', '*tests', '*.bin', 'sol', 'in', 'main', 'output*']
     folders = ['.cph', '.cph-ng']
     delete = partial(delete_matching_items, target, dry_run=False)
     list(map(delete, files))
