@@ -280,3 +280,4 @@ void out(const Head& h, const Tail&... t) {
 #else
 #define debug(...) ((void)0)
 #endif
+

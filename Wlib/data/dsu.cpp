@@ -1,28 +1,28 @@
-class DSU {
-  public:
-    vector<int> pa;
-    int n;
+class dsu {
+ public:
+  vector<int> p;
+  int n;
 
-    DSU(int _n) : n(_n) {
-        pa.resize(n);
-        iota(pa.begin(), pa.end(), 0);
-    }
+  dsu(int _n) : n(_n) {
+    p.resize(n);
+    iota(p.begin(), p.end(), 0);
+  }
 
-    int get(int x) {
-        return (x == pa[x] ? x : (pa[x] = get(pa[x])));
-    }
+  inline int get(int x) {
+    return (x == p[x] ? x : (p[x] = get(p[x])));
+  }
 
-    bool unite(int x, int y) {
-        x = get(x);
-        y = get(y);
-        if (x != y) {
-            pa[x] = y;
-            return true;
-        }
-        return false;
+  inline bool unite(int x, int y) {
+    x = get(x);
+    y = get(y);
+    if (x != y) {
+      p[x] = y;
+      return true;
     }
-
-    bool isSame(int x, int y) {
-        return get(x) == get(y);
-    }
+    return false;
+  }
+  
+  inline bool is_same(int x, int y) {
+    return get(x) == get(y);
+  }
 };
