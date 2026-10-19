@@ -2,34 +2,6 @@
 
 using namespace std;
 
-class DSU {
- public:
-  vector<int> p;
-  int n;
-
-  DSU(int _n) : n(_n) {
-    p.resize(n);
-    iota(p.begin(), p.end(), 0);
-  }
-
-  inline int get(int x) {
-    return (x == p[x] ? x : (p[x] = get(p[x])));
-  }
-
-  inline bool unite(int x, int y) {
-    x = get(x);
-    y = get(y);
-    if (x != y) {
-      p[x] = y;
-      return true;
-    }
-    return false;
-  }
-  
-  inline bool is_same(int x, int y) {
-    return get(x) == get(y);
-  }
-};
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(nullptr);
@@ -38,46 +10,19 @@ int main() {
 	while (tt--) {
 		int n, m;
 		cin >> n >> m;
-		DSU dsu(n);
-		vector<int> cnt(n);
-		vector<vector<int>> g(n);
-		for (int i = 0; i < m; i++) {
-			int u, v;
+		vector<int> deg(n);
+		for (int i = 0, u, v; i < m; i++) {
 			cin >> u >> v;
 			u--, v--;
-			dsu.unite(u, v);
-			g[u].push_back(v);
-			g[v].push_back(u);
+			deg[u]++, deg[v]++;
 		}
-		for (int u = 0; u < n; u++) {
-			if (g[u].size() == 1) {
-				cnt[dsu.get(u)]++;
-			}
-		}
-		vector<int> s(n);
-		for (int i = 0; i < n; i++) {
-			s[dsu.get(i)]++;
-		}
-		int ans = 0;
-		bool ok = true;
-		vector<int> vis(n);
-		for (int u = 0; u < n; u++) {
-			if (vis[dsu.get(u)]) continue;
-			vis[dsu.get(u)] = 1;
-			if (s[dsu.get(u)] == 1) {
-				ok = false;
-			} else if (s[dsu.get(u)] >= 2 && cnt[dsu.get(u)] == s[dsu.get(u)] - 1) {
-				ans += 2;
-			} else {
-				ans += 3;
-			}
-		}
-		if (!ok) {
+		sort(deg.begin(), deg.end());
+		if (deg[0] == 0) {
 			cout << "Brain Melt\n";
-		} else if (ans > 2) {
-			cout << "Many\n";
+		} else if (deg[n - 1] == n - 1 && deg[n - 2] == 1) {
+			cout << "2\n";
 		} else {
-			cout << 2 << '\n';
+			cout << "Many\n";
 		}
 	}
 	return 0;
