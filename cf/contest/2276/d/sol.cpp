@@ -1,12 +1,13 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-class dsu {
+
+class DSU {
  public:
   vector<int> p;
   int n;
 
-  dsu(int _n) : n(_n) {
+  DSU(int _n) : n(_n) {
     p.resize(n);
     iota(p.begin(), p.end(), 0);
   }
@@ -37,38 +38,37 @@ int main() {
 	while (tt--) {
 		int n, m;
 		cin >> n >> m;
-		dsu d(n);
+		DSU dsu(n);
 		vector<int> cnt(n);
 		vector<vector<int>> g(n);
 		for (int i = 0; i < m; i++) {
 			int u, v;
 			cin >> u >> v;
 			u--, v--;
-			d.unite(u, v);
+			dsu.unite(u, v);
 			g[u].push_back(v);
+			g[v].push_back(u);
 		}
 		for (int u = 0; u < n; u++) {
-			for (int v : g[u]) {
-				cnt[d.get(u)]++;
+			if (g[u].size() == 1) {
+				cnt[dsu.get(u)]++;
 			}
 		}
 		vector<int> s(n);
 		for (int i = 0; i < n; i++) {
-			s[d.get(i)]++;
+			s[dsu.get(i)]++;
 		}
 		int ans = 0;
 		bool ok = true;
 		vector<int> vis(n);
 		for (int u = 0; u < n; u++) {
-			if (vis[d.get(u)]) continue;
-			vis[d.get(u)] = 1;
-			if (s[d.get(u)] == 1) {
+			if (vis[dsu.get(u)]) continue;
+			vis[dsu.get(u)] = 1;
+			if (s[dsu.get(u)] == 1) {
 				ok = false;
-			} else if (s[d.get(u)] == 2) {
+			} else if (s[dsu.get(u)] >= 2 && cnt[dsu.get(u)] == s[dsu.get(u)] - 1) {
 				ans += 2;
-			} else if (s[d.get(u)] == 3 && cnt[d.get(u)] == 2) {
-				ans += 2;
-			} else if (s[d.get(u)] >= 3) {
+			} else {
 				ans += 3;
 			}
 		}
