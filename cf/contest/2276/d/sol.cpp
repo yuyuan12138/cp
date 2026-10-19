@@ -38,11 +38,19 @@ int main() {
 		int n, m;
 		cin >> n >> m;
 		dsu d(n);
+		vector<int> cnt(n);
+		vector<vector<int>> g(n);
 		for (int i = 0; i < m; i++) {
 			int u, v;
 			cin >> u >> v;
 			u--, v--;
 			d.unite(u, v);
+			g[u].push_back(v);
+		}
+		for (int u = 0; u < n; u++) {
+			for (int v : g[u]) {
+				cnt[d.get(u)]++;
+			}
 		}
 		vector<int> s(n);
 		for (int i = 0; i < n; i++) {
@@ -50,14 +58,26 @@ int main() {
 		}
 		int ans = 0;
 		bool ok = true;
+		vector<int> vis(n);
 		for (int u = 0; u < n; u++) {
-			if (s[u] == 1) {
+			if (vis[d.get(u)]) continue;
+			vis[d.get(u)] = 1;
+			if (s[d.get(u)] == 1) {
 				ok = false;
-			} else if (s[u] == 2) {
+			} else if (s[d.get(u)] == 2) {
 				ans += 2;
-			} else if (s[u] > 2) {
-				ans += 
+			} else if (s[d.get(u)] == 3 && cnt[d.get(u)] == 2) {
+				ans += 2;
+			} else if (s[d.get(u)] >= 3) {
+				ans += 3;
 			}
+		}
+		if (!ok) {
+			cout << "Brain Melt\n";
+		} else if (ans > 2) {
+			cout << "Many\n";
+		} else {
+			cout << 2 << '\n';
 		}
 	}
 	return 0;
