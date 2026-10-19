@@ -10,33 +10,30 @@
 #define debug(...) 42
 #endif
 
+void solve() {
+    int n;
+    std::cin >> n;
+    std::vector<int> a(n);
+    for (int i = 0; i < n; i++) {
+        std::cin >> a[i];
+    }
+    std::vector<int64_t> dp(n);
+    dp[0] = a[0];
+    for (int i = 0; i < n - 1; i++) {
+        dp[i + 1] = dp[i] + a[i + 1] - 1;
+        if (i > 0) 
+            dp[i + 1] = std::min(dp[i + 1], dp[i - 1] + a[i] + std::max(0, a[i + 1] - i - 1));
+    }
+    std::cout << dp[n - 1] << '\n';
+}
+
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
     int tt;
     std::cin >> tt;
     while (tt--) {
-        int n;
-        std::cin >> n;
-
-        std::vector<int> a(n);
-        for (int i = 0; i < n; i++) {
-            std::cin >> a[i];
-        }
-        
-        std::vector<int64_t> f(n + 1);
-
-        for (int i = 0; i < n; i++) {
-            if (i == 0) {
-                f[i] = a[i];
-            } else if (i == 1) {
-                f[i] = f[i - 1] + a[i] - 1;
-            } else {
-                f[i] = f[i - 1] + a[i] - 1;
-                f[i] = std::min(f[i], f[i - 2] + a[i - 1] + std::max(a[i] - i, 0));
-            }
-        }
-        std::cout << f[n - 1] << '\n';
+        solve();
     }
     return 0;
 }
