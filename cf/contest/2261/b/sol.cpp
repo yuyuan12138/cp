@@ -10,21 +10,16 @@ int main() {
 	while (tt--) {
 		int n;
 		cin >> n;
-		int mx = 0;
-		vector<int> a(n);
-		for (int i = 0; i < n; i++) {
-			cin >> a[i];
-			mx = max(mx, a[i]);
+		int mx = INT_MIN, mn = INT_MAX;
+		for (int i = 0, x; i < n; i++) {
+			cin >> x;
+			mx = max(mx, x);
+			mn = min(mn, x);
 		}
-		if (all_of(a.begin(), a.end(), [&](int x) { return x == mx; })) {
+		if (mx == mn) {
 			cout << mx << '\n';
 		} else {
-			int ans = 1;
-			while (mx) {
-				ans <<= 1;
-				mx >>= 1;
-			}
-			cout << ans - 1 << '\n';
+			cout << (((1 << (32 - __builtin_clz(mx ^ mn))) - 1) | mx) << '\n';
 		}
 	}
 	return 0;
